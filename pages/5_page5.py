@@ -7,7 +7,7 @@ import seaborn as sb
 import folium
 from folium import plugins
 
-st.set_page_config(layout="wide")
+# st.set_page_config(layout="wide")
 
 # 한글 깨짐 처리 설정
 mat.rcParams['font.family'] = 'Malgun Gothic'
@@ -23,14 +23,14 @@ df = pd.DataFrame({
 # st.dataframe(df, use_container_width=True)
 
 # 바 차트 설정
-# fig, ax = plt.subplots()
-# ax.bar(df['이름'], df['나이'])
-# st.pyplot(fig)
+fig, ax = plt.subplots()
+ax.bar(df['이름'], df['나이'])
+st.pyplot(fig)
 
 # seaborn
-# bar2 = sb.barplot(x="이름", y="나이", data=df, ax=ax)
-# fig = bar2.get_figure()
-# st.pyplot(fig)
+bar2 = sb.barplot(x="이름", y="나이", data=df, ax=ax)
+fig = bar2.get_figure()
+st.pyplot(fig)
 
 #######
 
@@ -62,4 +62,22 @@ for i in range(300):
     ).add_to(m)
 
 # 지도 출력
-st.components.v1.html(m._repr_html_(), height=800)
+st.components.v1.html(m._repr_html_(), height=300)
+
+#####
+
+# 라인 차트
+chart_data = pd.DataFrame(np.random.randn(20, 4), columns=["a", "b", "c","d"])
+st.dataframe(chart_data, use_container_width=True)
+st.line_chart(chart_data, x_label="주말", y_label="여행지")
+
+# 이미지 출력
+
+col1, col2 = st.columns([1,2])
+
+col1.image("https://images.unsplash.com/photo-1548407260-da850faa41e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1487&q=80")
+col1.image("https://images.unsplash.com/photo-1548407260-da850faa41e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1487&q=80")
+col2.image("https://images.unsplash.com/photo-1548407260-da850faa41e3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1487&q=80")
+
+# 소리 출력
+# st.audio("")
