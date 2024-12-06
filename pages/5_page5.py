@@ -34,23 +34,32 @@ df = pd.DataFrame({
 
 #######
 
-df1 = pd.DataFrame(
-    np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
-    columns=["lat", "lon"],
-)
+# Streamlit 지도 샘플 (한국 표현은 안됨)
+# df1 = pd.DataFrame(
+#     np.random.randn(1000, 2) / [50, 50] + [37.76, -122.4],
+#     columns=["lat", "lon"],
+# )
 # st.map(df1)
 
 df2 = pd.read_csv("data/data1.csv")
-df2.columns = ["lat", "lon"]
+# st.dataframe(df2, use_container_width=True)
 
-# st.dataframe(df1, use_container_width=True)
-# st.dataframe(df2.iloc[ : 10, : ], use_container_width=True)
-
-# st.map(df2)
-
+# 한국 지도 표현를 위하여 "folium" 설치 후 사용
 map_center = [37.5640076, 126.9586116]
-m = folium.Map(location=map_center, zoom_start=16)
+m = folium.Map(location=map_center, zoom_start=14)
 
-folium.Marker(map_center, popup='서대문구').add_to(m)
+# 지도에 표시 하는 마커 반복
+for i in range(300):
+    popup_content = f"""
+    <div style="display: flex; flex-direction: col; justify-content: space-between; width: 300px; font-weight: bold;">
+        <span>{df2.iloc[i, 0]}</span>
+        <span style="color: green;">[{df2.iloc[i, 2]} , {df2.iloc[i, 1]}]</span>
+    </div>
+    """
+    folium.Marker(
+        [df2.iloc[i, 2], df2.iloc[i, 1]], 
+        popup=folium.Popup(popup_content, max_width=300)
+    ).add_to(m)
 
-st.components.v1.html(m._repr_html_(), height=500)
+# 지도 출력
+st.components.v1.html(m._repr_html_(), height=800)
