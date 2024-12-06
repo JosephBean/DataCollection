@@ -30,3 +30,8 @@ st.markdown(":green[$\sqrt{x^2+y^2}=1$]")
 
 # 라텍스
 st.latex(r"\sqrt{x^2+y^2}=1")
+
+st.page_link(
+    page="main.py",
+    label="시작화면"
+)
